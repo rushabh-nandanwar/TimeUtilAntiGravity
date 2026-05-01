@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     // Need to pre-connect for faster font loading but simpler to just use link
-    const linkParams = 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700;800&family=Syne:wght@400;500;600;700;800&display=swap';
+    const linkParams = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap';
     const link = document.createElement('link');
     link.href = linkParams;
     link.rel = 'stylesheet';

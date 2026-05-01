@@ -94,16 +94,16 @@ export default function StudyLog() {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6 pb-20 animate-in fade-in duration-300">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <h2 className="text-3xl font-display font-bold text-app-text">Study Log</h2>
+        <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-12 pb-20 animate-in fade-in duration-300">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-app-border/50 pb-6">
+                <h2 className="text-[56px] font-sans font-normal tracking-[-2.8px] leading-tight text-[#f0f0f0]">Study Log</h2>
                 <button onClick={handleExportCSV} disabled={filteredAndSortedSessions.length === 0}
-                    className="flex items-center gap-2 px-4 py-2 bg-app-surface border border-app-border text-app-text rounded-lg hover:border-app-primary transition-colors disabled:opacity-50">
+                    className="flex items-center gap-2 px-6 py-2.5 bg-transparent border border-app-border text-[#f0f0f0] rounded-full hover:bg-white/5 transition-colors font-sans tracking-[0.35px] disabled:opacity-50">
                     <Download size={18} /> Export CSV
                 </button>
             </div>
 
-            <div className="bg-app-surface border border-app-border rounded-xl p-6 shadow-sm space-y-6">
+            <div className="bg-transparent border border-app-border rounded-3xl p-8 space-y-8">
 
                 {/* Filters */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
@@ -111,12 +111,12 @@ export default function StudyLog() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-app-muted" size={18} />
                         <input type="text" placeholder="Search activity or notes..."
                             value={searchTerm} onChange={e => { setSearchTerm(e.target.value); setCurrentPage(1) }}
-                            className="w-full bg-app-bg border border-app-border rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:border-app-primary focus:ring-1 focus:ring-app-primary transition-all" />
+                            className="w-full bg-transparent border border-app-border text-[#f0f0f0] rounded-lg pl-10 pr-3 py-2 text-[14px] font-inter focus:outline-none focus:border-white/20 transition-all placeholder:text-app-muted" />
                     </div>
 
                     <div className="md:col-span-3">
                         <select value={subjectFilter} onChange={e => { setSubjectFilter(e.target.value); setCurrentPage(1) }}
-                            className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary h-[38px]">
+                            className="w-full bg-transparent border border-app-border text-[#f0f0f0] rounded-lg px-3 py-2 text-[14px] font-inter focus:outline-none focus:border-white/20 h-[38px] appearance-none" style={{ backgroundColor: '#000000' }}>
                             <option value="All">All Subjects</option>
                             {settings.subjects.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
@@ -125,42 +125,42 @@ export default function StudyLog() {
                     <div className="md:col-span-5 flex items-center gap-2">
                         <Filter className="text-app-muted hidden lg:block mr-1" size={18} />
                         <input type="date" value={dateFrom} onChange={e => { setDateFrom(e.target.value); setCurrentPage(1) }}
-                            className="flex-1 bg-app-bg border border-app-border rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-app-primary max-w-[140px] h-[38px]" title="From Date" />
+                            className="flex-1 bg-transparent border border-app-border text-[#f0f0f0] rounded-lg px-3 py-2 text-[14px] font-inter focus:outline-none focus:border-white/20 max-w-[140px] h-[38px]" title="From Date" style={{ colorScheme: 'dark' }} />
                         <span className="text-app-muted text-sm px-1">to</span>
                         <input type="date" value={dateTo} onChange={e => { setDateTo(e.target.value); setCurrentPage(1) }}
-                            className="flex-1 bg-app-bg border border-app-border rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-app-primary max-w-[140px] h-[38px]" title="To Date" />
+                            className="flex-1 bg-transparent border border-app-border text-[#f0f0f0] rounded-lg px-3 py-2 text-[14px] font-inter focus:outline-none focus:border-white/20 max-w-[140px] h-[38px]" title="To Date" style={{ colorScheme: 'dark' }} />
                     </div>
                 </div>
 
                 {/* Table */}
-                <div className="overflow-x-auto rounded-lg border border-app-border">
-                    <table className="w-full text-left text-sm whitespace-nowrap">
-                        <thead className="bg-app-bg/50 border-b border-app-border text-app-muted">
+                <div className="overflow-x-auto rounded-xl border border-app-border">
+                    <table className="w-full text-left text-[14px] font-inter whitespace-nowrap text-[#f0f0f0]">
+                        <thead className="bg-[#0a0a0a] border-b border-app-border text-app-muted font-sans tracking-[0.35px]">
                             <tr>
-                                <th className="px-4 py-3 font-medium cursor-pointer hover:text-app-primary transition-colors flex items-center gap-1" onClick={toggleSort}>
+                                <th className="px-4 py-4 font-normal cursor-pointer hover:text-white transition-colors flex items-center gap-1" onClick={toggleSort}>
                                     Date {sortOrder === 'desc' ? '↓' : '↑'}
                                 </th>
-                                <th className="px-4 py-3 font-medium">Subject</th>
-                                <th className="px-4 py-3 font-medium">Activity</th>
-                                <th className="px-4 py-3 font-medium">Duration</th>
-                                <th className="px-4 py-3 font-medium">Type</th>
-                                <th className="px-4 py-3 font-medium text-center">Distractions</th>
-                                <th className="px-4 py-3 font-medium w-full">Notes</th>
-                                <th className="px-4 py-3 font-medium"></th>
+                                <th className="px-4 py-4 font-normal">Subject</th>
+                                <th className="px-4 py-4 font-normal">Activity</th>
+                                <th className="px-4 py-4 font-normal">Duration</th>
+                                <th className="px-4 py-4 font-normal">Type</th>
+                                <th className="px-4 py-4 font-normal text-center">Distractions</th>
+                                <th className="px-4 py-4 font-normal w-full">Notes</th>
+                                <th className="px-4 py-4 font-normal"></th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-app-border">
+                        <tbody className="divide-y divide-app-border/50">
                             {paginatedSessions.length > 0 ? paginatedSessions.map(session => (
-                                <tr key={session.id} className="hover:bg-app-bg/30 transition-colors group">
-                                    <td className="px-4 py-3 tabular-nums font-mono text-xs">{session.date} <span className="opacity-60">{session.startTime}</span></td>
-                                    <td className="px-4 py-3"><span className="px-2 py-1 bg-app-surface border border-app-border rounded-full text-xs font-medium">{session.subject}</span></td>
+                                <tr key={session.id} className="hover:bg-white/2 transition-colors group">
+                                    <td className="px-4 py-3 tabular-nums font-mono text-[12px]">{session.date} <span className="opacity-60">{session.startTime}</span></td>
+                                    <td className="px-4 py-3"><span className="px-2.5 py-1 bg-transparent border border-app-border rounded-[9999px] text-[12px] font-sans tracking-[0.35px]">{session.subject}</span></td>
                                     <td className="px-4 py-3 truncate max-w-[200px]" title={session.activity}>{session.activity || '-'}</td>
-                                    <td className="px-4 py-3 font-mono text-xs"><span className="text-app-primary font-medium">{session.duration}m</span></td>
-                                    <td className="px-4 py-3 text-xs capitalize"><span className={session.type === 'pomodoro' ? 'text-app-secondary' : 'text-app-muted'}>{session.type}</span></td>
-                                    <td className="px-4 py-3 text-center">{session.distractions > 0 ? <span className="text-app-danger font-medium">{session.distractions}</span> : <span className="text-app-muted">-</span>}</td>
-                                    <td className="px-4 py-3 truncate max-w-[200px] text-xs text-app-muted" title={session.notes}>{session.notes || '-'}</td>
+                                    <td className="px-4 py-3 font-mono text-[12px]"><span className="text-[#f0f0f0]">{session.duration}m</span></td>
+                                    <td className="px-4 py-3 text-[12px] capitalize"><span className={session.type === 'pomodoro' ? 'text-[rgba(214,235,253,0.8)]' : 'text-app-muted'}>{session.type}</span></td>
+                                    <td className="px-4 py-3 text-center">{session.distractions > 0 ? <span className="text-[#ff2047]">{session.distractions}</span> : <span className="text-app-muted">-</span>}</td>
+                                    <td className="px-4 py-3 truncate max-w-[200px] text-[12px] text-app-muted" title={session.notes}>{session.notes || '-'}</td>
                                     <td className="px-4 py-3 text-right">
-                                        <button onClick={() => { deleteSession(session.id); toast('Session deleted'); }} className="text-app-muted hover:text-app-danger opacity-0 group-hover:opacity-100 transition-all p-1">
+                                        <button onClick={() => { deleteSession(session.id); toast('Session deleted'); }} className="text-app-muted hover:text-[#ff2047] hover:bg-[#ff2047]/10 rounded-full transition-all p-2 opacity-0 group-hover:opacity-100">
                                             <Trash2 size={16} />
                                         </button>
                                     </td>
@@ -170,7 +170,7 @@ export default function StudyLog() {
                                     <td colSpan={8}>
                                         <div className="flex flex-col items-center justify-center py-12 text-app-muted space-y-3">
                                             <AlertCircle size={40} className="opacity-50" />
-                                            <p>No study sessions found matching your filters.</p>
+                                            <p className="font-inter">No study sessions found matching your filters.</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -181,18 +181,18 @@ export default function StudyLog() {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-sm font-inter">
                         <span className="text-app-muted">
                             Showing {(currentPage - 1) * rowsPerPage + 1} to {Math.min(currentPage * rowsPerPage, filteredAndSortedSessions.length)} of {filteredAndSortedSessions.length} entries
                         </span>
                         <div className="flex items-center gap-2">
                             <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}
-                                className="p-1 px-3 border border-app-border rounded hover:bg-app-bg disabled:opacity-50 flex items-center justify-center transition-colors">
+                                className="p-1 px-3 border border-app-border rounded-lg hover:bg-white/5 disabled:opacity-50 flex items-center justify-center transition-colors text-[#f0f0f0]">
                                 <ChevronLeft size={16} /> Prev
                             </button>
-                            <span className="px-3 py-1 font-medium bg-app-bg rounded border border-app-border">{currentPage} / {totalPages}</span>
+                            <span className="px-3 py-1 bg-transparent rounded-lg border border-app-border text-[#f0f0f0]">{currentPage} / {totalPages}</span>
                             <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}
-                                className="p-1 px-3 border border-app-border rounded hover:bg-app-bg disabled:opacity-50 flex items-center justify-center transition-colors">
+                                className="p-1 px-3 border border-app-border rounded-lg hover:bg-white/5 disabled:opacity-50 flex items-center justify-center transition-colors text-[#f0f0f0]">
                                 Next <ChevronRight size={16} />
                             </button>
                         </div>

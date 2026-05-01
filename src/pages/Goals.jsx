@@ -76,80 +76,80 @@ export default function Goals() {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-20 animate-in fade-in duration-300">
+        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-12 pb-20 animate-in fade-in duration-300">
 
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row gap-12">
 
                 {/* Main Content */}
-                <div className="flex-1 space-y-6">
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-app-border pb-4">
-                        <h2 className="text-3xl font-display font-bold text-app-text">Goals</h2>
-                        <button onClick={() => { setNewGoal({ ...newGoal, type: activeTab }); setShowAddModal(true); }} className="flex items-center gap-2 px-4 py-2 bg-app-primary text-white rounded-lg hover:bg-app-primary/90 transition-colors">
+                <div className="flex-1 space-y-8">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-app-border/50 pb-6">
+                        <h2 className="text-[56px] font-sans font-normal tracking-[-2.8px] leading-tight text-[#f0f0f0]">Goals</h2>
+                        <button onClick={() => { setNewGoal({ ...newGoal, type: activeTab }); setShowAddModal(true); }} className="flex items-center gap-2 px-6 py-2.5 bg-transparent border border-app-border text-[#f0f0f0] rounded-full hover:bg-white/5 transition-colors font-sans tracking-[0.35px]">
                             <Plus size={18} /> Add Goal
                         </button>
                     </div>
 
                     {/* Tabs */}
-                    <div className="flex bg-app-surface p-1 rounded-lg border border-app-border w-fit text-sm">
+                    <div className="flex bg-transparent p-1 border border-app-border rounded-lg w-fit">
                         {['daily', 'weekly', 'monthly'].map(tab => (
                             <button key={tab} onClick={() => setActiveTab(tab)}
-                                className={`px-6 py-2 rounded-md capitalize font-medium transition-colors ${activeTab === tab ? 'bg-app-bg text-app-primary shadow-sm' : 'text-app-muted hover:text-app-text'}`}>
+                                className={`px-8 py-2.5 rounded-md capitalize font-sans tracking-[0.35px] font-medium transition-colors ${activeTab === tab ? 'bg-white/10 text-white' : 'text-app-muted hover:text-[#f0f0f0] hover:bg-white/5'}`}>
                                 {tab}
                             </button>
                         ))}
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="bg-app-surface border border-app-border rounded-xl p-6 shadow-sm">
-                        <div className="flex justify-between items-end mb-2">
-                            <span className="font-medium text-app-text">{completedCount} of {totalCount} goals completed</span>
-                            <span className="text-sm font-bold text-app-primary">{progressPercent}%</span>
+                    <div className="bg-transparent border border-app-border rounded-3xl p-8">
+                        <div className="flex justify-between items-end mb-4">
+                            <span className="font-inter font-medium text-[#f0f0f0]">{completedCount} of {totalCount} goals completed</span>
+                            <span className="text-[20px] font-mono font-bold text-app-muted">{progressPercent}%</span>
                         </div>
-                        <div className="h-3 w-full bg-app-bg rounded-full overflow-hidden border border-app-border">
+                        <div className="h-2 w-full bg-transparent rounded-full overflow-hidden border border-app-border">
                             <div
-                                className="h-full bg-linear-to-r from-app-secondary to-app-primary transition-all duration-500"
+                                className="h-full bg-white transition-all duration-500"
                                 style={{ width: `${progressPercent}%` }}
                             />
                         </div>
                     </div>
 
                     {/* Goal List */}
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {filteredGoals.length > 0 ? filteredGoals.map(goal => (
-                            <div key={goal.id} className={`flex items-start sm:items-center gap-4 p-4 rounded-xl border transition-all ${goal.completed ? 'bg-app-bg border-app-border opacity-60' : 'bg-app-surface border-app-border hover:border-app-primary/50 shadow-sm'}`}>
+                            <div key={goal.id} className={`flex items-start sm:items-center gap-6 p-6 rounded-2xl border transition-all ${goal.completed ? 'bg-transparent border-app-border opacity-50 hover:opacity-100' : 'bg-transparent border-app-border hover:bg-white/2'}`}>
 
                                 <input
                                     type="checkbox"
                                     checked={goal.completed}
                                     onChange={() => updateGoal(goal.id, { completed: !goal.completed })}
-                                    className="mt-1 sm:mt-0 w-6 h-6 rounded-full border-2 border-app-border accent-app-primary cursor-pointer shrink-0"
+                                    className="mt-1 sm:mt-0 w-6 h-6 border border-app-border rounded-sm accent-[#f0f0f0] cursor-pointer shrink-0 appearance-none checked:bg-[#f0f0f0] transition-colors relative after:content-[''] after:absolute after:hidden checked:after:block after:left-2 after:top-1 after:w-1.5 after:h-3 after:border-solid after:border-black after:border-r-2 after:border-b-2 after:rotate-45"
                                 />
 
                                 <div className="flex-1 min-w-0">
-                                    <p className={`font-medium truncate ${goal.completed ? 'line-through text-app-muted' : 'text-app-text'}`}>
+                                    <p className={`text-[18px] font-inter ${goal.completed ? 'line-through text-app-muted' : 'text-[#f0f0f0]'}`}>
                                         {goal.text}
                                     </p>
-                                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-1 text-xs">
-                                        <span className="flex items-center gap-1.5 font-medium px-2 py-0.5 bg-app-bg border border-app-border rounded-full text-app-muted">
-                                            <span className={`w-2 h-2 rounded-full ${getPriorityColor(goal.priority)}`} />
+                                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm font-sans tracking-[0.35px]">
+                                        <span className="flex items-center gap-2 font-medium px-3 py-1 bg-transparent border border-app-border rounded-[9999px] text-app-muted">
+                                            <span className={`w-2.5 h-2.5 rounded-full ${getPriorityColor(goal.priority)}`} />
                                             {goal.subject}
                                         </span>
-                                        <span className={`flex items-center gap-1 ${goal.dueDate === todayStr && !goal.completed ? 'text-app-danger font-medium' : 'text-app-muted'}`}>
-                                            <Calendar size={12} />
+                                        <span className={`flex items-center gap-1 ${goal.dueDate === todayStr && !goal.completed ? 'text-[#ff2047] font-medium' : 'text-app-muted'}`}>
+                                            <Calendar size={14} />
                                             {goal.dueDate === todayStr ? 'Today' : new Date(goal.dueDate).toLocaleDateString()}
                                         </span>
                                     </div>
                                 </div>
 
-                                <button onClick={() => { deleteGoal(goal.id); toast('Goal deleted'); }} className="p-2 text-app-muted hover:text-app-danger hover:bg-app-danger/10 rounded-lg transition-colors">
-                                    <Trash2 size={18} />
+                                <button onClick={() => { deleteGoal(goal.id); toast('Goal deleted'); }} className="p-3 text-app-muted hover:text-[#ff2047] hover:bg-[#ff2047]/10 rounded-full transition-colors">
+                                    <Trash2 size={20} />
                                 </button>
                             </div>
                         )) : (
-                            <div className="text-center py-12 bg-app-surface border border-app-border border-dashed rounded-xl">
-                                <TargetIcon size={40} className="mx-auto text-app-muted mb-4 opacity-50" />
-                                <p className="text-app-muted">No {activeTab} goals found.</p>
-                                <button onClick={() => { setNewGoal({ ...newGoal, type: activeTab }); setShowAddModal(true); }} className="mt-2 text-app-primary text-sm font-medium hover:underline">
+                            <div className="text-center py-16 bg-transparent border border-app-border border-dashed rounded-3xl">
+                                <TargetIcon size={48} className="mx-auto text-app-muted mb-4 opacity-50" />
+                                <p className="text-app-muted font-inter text-[16px]">No {activeTab} goals found.</p>
+                                <button onClick={() => { setNewGoal({ ...newGoal, type: activeTab }); setShowAddModal(true); }} className="mt-4 text-[#f0f0f0] border border-app-border px-6 py-2 rounded-full text-sm font-sans tracking-[0.35px] hover:bg-white/5 transition-colors">
                                     Create one now
                                 </button>
                             </div>
@@ -158,36 +158,37 @@ export default function Goals() {
                 </div>
 
                 {/* Stats Sidebar */}
-                <div className="w-full md:w-64 shrink-0 space-y-6">
-                    <div className="bg-app-surface border border-app-border rounded-xl p-5 shadow-sm space-y-4">
-                        <h3 className="font-display font-semibold border-b border-app-border pb-2">Insights</h3>
+                <div className="w-full md:w-72 shrink-0 space-y-8">
+                    <div className="bg-transparent border border-app-border rounded-3xl p-6 space-y-6">
+                        <h3 className="text-[24px] font-sans font-normal border-b border-app-border/50 pb-4 text-[#f0f0f0] tracking-[-1px]">Insights</h3>
                         <div>
-                            <p className="text-sm text-app-muted mb-1">Completion (This Week)</p>
+                            <p className="text-[12px] uppercase tracking-[0.35px] font-sans text-app-muted mb-2">Completion (This Week)</p>
                             <div className="flex items-end gap-2">
-                                <span className="text-2xl font-bold text-app-primary">{stats.weekCompletionRate}%</span>
+                                <span className="text-[40px] font-display font-normal text-white leading-none tracking-[-0.96px]">{stats.weekCompletionRate}<span className="text-[20px] text-app-muted">%</span></span>
                             </div>
                         </div>
                         <div>
-                            <p className="text-sm text-app-muted mb-1">Most Productive Subject</p>
-                            <span className="inline-block px-3 py-1 bg-app-primary/10 text-app-primary rounded-lg text-sm font-medium">
+                            <p className="text-[12px] uppercase tracking-[0.35px] font-sans text-app-muted mb-2">Most Productive Subject</p>
+                            <span className="inline-block px-4 py-2 border border-app-border bg-white/2 text-[#f0f0f0] rounded-full text-[14px] font-sans tracking-[0.35px]">
                                 {stats.mostProductiveSubject}
                             </span>
                         </div>
                     </div>
 
-                    <div className="bg-app-surface border border-app-danger/20 rounded-xl p-5 shadow-sm space-y-3">
-                        <h3 className="font-display font-semibold text-app-danger flex items-center gap-2">
+                    <div className="bg-transparent border border-[#ff2047]/30 rounded-3xl p-6 space-y-4 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff2047]/10 rounded-full blur-3xl" />
+                        <h3 className="text-[20px] font-sans tracking-tight text-[#ff2047] flex items-center gap-2 relative z-10">
                             Due Today
                         </h3>
-                        <div className="space-y-2">
+                        <div className="space-y-3 relative z-10">
                             {goals.filter(g => g.dueDate === todayStr && !g.completed).length > 0 ? (
                                 goals.filter(g => g.dueDate === todayStr && !g.completed).map(g => (
-                                    <div key={g.id} className="text-sm p-2 bg-app-danger/5 border border-app-danger/10 rounded-lg text-app-text truncate">
+                                    <div key={g.id} className="text-[14px] p-3 bg-transparent border border-[#ff2047]/20 rounded-xl text-[#f0f0f0] font-inter">
                                         {g.text}
                                     </div>
                                 ))
                             ) : (
-                                <p className="text-xs text-app-muted">Nothing due today! Enjoy your free time.</p>
+                                <p className="text-[14px] font-inter text-app-muted">Nothing due today! Enjoy your free time.</p>
                             )}
                         </div>
                     </div>
@@ -197,30 +198,30 @@ export default function Goals() {
 
             {/* Add Goal Modal */}
             {showAddModal && (
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm animate-in fade-in duration-200">
-                    <form onSubmit={handleAddSubmit} className="bg-app-surface border border-app-border rounded-xl p-6 max-w-md w-full space-y-5 shadow-2xl animate-in zoom-in-95 duration-200">
-                        <h3 className="text-xl font-display font-bold text-app-text">Add New Goal</h3>
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm animate-in fade-in duration-200">
+                    <form onSubmit={handleAddSubmit} className="bg-[#0a0a0a] border border-app-border rounded-3xl p-8 max-w-lg w-full space-y-6 shadow-2xl animate-in zoom-in-95 duration-200">
+                        <h3 className="text-[32px] font-sans font-normal text-white tracking-[-1px]">Add New Goal</h3>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-app-muted">Description</label>
+                            <label className="text-[12px] font-sans uppercase tracking-[0.35px] text-app-muted mb-1 block">Description</label>
                             <input type="text" required autoFocus placeholder="What do you want to achieve?"
                                 value={newGoal.text} onChange={e => setNewGoal({ ...newGoal, text: e.target.value })}
-                                className="w-full bg-app-bg border border-app-border rounded-lg px-4 py-2 focus:outline-none focus:border-app-primary" />
+                                className="w-full bg-transparent border border-app-border rounded-lg px-4 py-3 text-[#f0f0f0] focus:outline-none focus:border-white/20 font-inter" />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-app-muted">Subject</label>
+                                <label className="text-[12px] font-sans uppercase tracking-[0.35px] text-app-muted mb-1 block">Subject</label>
                                 <select value={newGoal.subject} onChange={e => setNewGoal({ ...newGoal, subject: e.target.value })}
-                                    className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary">
+                                    className="w-full bg-transparent border border-app-border rounded-lg px-4 py-3 text-[14px] font-inter text-[#f0f0f0] focus:outline-none focus:border-white/20 appearance-none">
                                     {settings.subjects.map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-app-muted">Priority</label>
+                                <label className="text-[12px] font-sans uppercase tracking-[0.35px] text-app-muted mb-1 block">Priority</label>
                                 <select value={newGoal.priority} onChange={e => setNewGoal({ ...newGoal, priority: e.target.value })}
-                                    className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary">
+                                    className="w-full bg-transparent border border-app-border rounded-lg px-4 py-3 text-[14px] font-inter text-[#f0f0f0] focus:outline-none focus:border-white/20 appearance-none">
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
                                     <option value="high">High</option>
@@ -228,9 +229,9 @@ export default function Goals() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-app-muted">Type</label>
+                                <label className="text-[12px] font-sans uppercase tracking-[0.35px] text-app-muted mb-1 block">Type</label>
                                 <select value={newGoal.type} onChange={e => setNewGoal({ ...newGoal, type: e.target.value })}
-                                    className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary capitalize">
+                                    className="w-full bg-transparent border border-app-border rounded-lg px-4 py-3 text-[14px] font-inter text-[#f0f0f0] focus:outline-none focus:border-white/20 capitalize appearance-none">
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="monthly">Monthly</option>
@@ -238,18 +239,18 @@ export default function Goals() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-app-muted">Due Date</label>
+                                <label className="text-[12px] font-sans uppercase tracking-[0.35px] text-app-muted mb-1 block">Due Date</label>
                                 <input type="date" required value={newGoal.dueDate} onChange={e => setNewGoal({ ...newGoal, dueDate: e.target.value })}
-                                    className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary" />
+                                    className="w-full bg-transparent border border-app-border rounded-lg px-4 py-3 text-[14px] font-inter text-[#f0f0f0] focus:outline-none focus:border-white/20" />
                             </div>
                         </div>
 
-                        <div className="flex gap-3 pt-2">
-                            <button type="button" onClick={() => setShowAddModal(false)} className="flex-1 py-2.5 border border-app-border rounded-lg font-medium hover:bg-app-bg transition-colors">
+                        <div className="flex gap-4 pt-4">
+                            <button type="button" onClick={() => setShowAddModal(false)} className="flex-1 py-3 border border-app-border rounded-full font-sans tracking-[0.35px] text-app-muted hover:bg-white/5 transition-colors">
                                 Cancel
                             </button>
                             <button type="submit" disabled={!newGoal.text.trim()}
-                                className="flex-1 py-2.5 bg-app-primary text-white rounded-lg font-medium hover:bg-app-primary/90 transition-colors disabled:opacity-50">
+                                className="flex-1 py-3 bg-white text-black border border-transparent rounded-full font-sans font-medium tracking-[0.35px] hover:bg-white/90 transition-colors disabled:opacity-50">
                                 Create Goal
                             </button>
                         </div>
