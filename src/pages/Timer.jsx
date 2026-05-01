@@ -67,11 +67,11 @@ export default function Timer() {
 
             {/* Session Prep Inputs */}
             {phase === 'work' && !isActive && timeLeft === settings.pomodoroWork * 60 && !showCompletion && (
-                <div className="w-full max-w-md bg-app-surface border border-app-border rounded-xl p-4 mb-8 flex flex-col gap-3">
+                <div className="w-full max-w-md bg-transparent border border-app-border rounded-xl p-6 mb-8 flex flex-col gap-4">
                     <select
                         value={subject}
                         onChange={e => setSubject(e.target.value)}
-                        className="bg-app-bg border border-app-border rounded-lg px-3 py-2 focus:outline-none focus:border-app-primary text-sm"
+                        className="bg-transparent border border-app-border rounded-lg px-4 py-3 focus:outline-none focus:border-white/20 text-sm font-sans tracking-[0.35px] text-[#f0f0f0] appearance-none"
                     >
                         {settings.subjects.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
@@ -80,7 +80,7 @@ export default function Timer() {
                         placeholder="What are you studying?"
                         value={activity}
                         onChange={e => setActivity(e.target.value)}
-                        className="bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary"
+                        className="bg-transparent border border-app-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-white/20 font-inter text-[#f0f0f0] placeholder:text-app-muted"
                     />
                 </div>
             )}
@@ -88,26 +88,26 @@ export default function Timer() {
             {/* Timer Display */}
             <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center my-8">
                 <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="46" fill="transparent" stroke="var(--color-surface)" strokeWidth="3" />
+                    <circle cx="50" cy="50" r="46" fill="transparent" stroke="rgba(214, 235, 253, 0.05)" strokeWidth="1" />
                     <circle cx="50" cy="50" r="46" fill="transparent" stroke={phaseColor} strokeWidth="3"
                         strokeDasharray="289" strokeDashoffset={289 - (289 * ringProgress) / 100}
                         className="transition-all duration-1000 ease-linear" strokeLinecap="round" />
                 </svg>
 
                 <div className="flex flex-col items-center justify-center z-10 text-center">
-                    <span className="text-xl font-medium tracking-widest uppercase mb-2" style={{ color: phaseColor }}>
+                    <span className="text-[14px] font-sans tracking-[0.35px] uppercase mb-4" style={{ color: phaseColor }}>
                         {phaseLabel}
                     </span>
-                    <span className="text-6xl md:text-8xl font-mono font-bold text-app-text tabular-nums">
+                    <span className="text-[76px] md:text-[96px] font-display font-normal text-[#f0f0f0] tabular-nums tracking-[-0.96px] leading-none">
                         {timeDisplay}
                     </span>
-                    <div className="mt-6 flex items-center justify-center gap-2">
+                    <div className="mt-8 flex items-center justify-center gap-3">
                         {/* Pomodoro Count Dots */}
                         {Array.from({ length: settings.pomodorosUntilLong }).map((_, i) => {
                             const currentCycleCompleted = completedPomodoros % settings.pomodorosUntilLong;
                             const isFilled = i < currentCycleCompleted;
                             return (
-                                <div key={i} className={`w-3 h-3 rounded-full transition-colors ${isFilled ? 'bg-app-primary' : 'bg-app-surface border border-app-border'}`} />
+                                <div key={i} className={`w-2.5 h-2.5 rounded-full transition-colors border border-app-border ${isFilled ? 'bg-[#f0f0f0]' : 'bg-transparent'}`} />
                             );
                         })}
                     </div>
@@ -115,27 +115,27 @@ export default function Timer() {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-4 mb-8">
-                <button onClick={toggleTimer} className={`w-16 h-16 rounded-full flex items-center justify-center text-white transition-transform active:scale-95 shadow-lg ${isActive ? 'bg-app-danger hover:bg-app-danger/90' : 'bg-app-primary hover:bg-app-primary/90'}`}>
-                    {isActive ? <Pause size={28} /> : <Play size={28} className="ml-1" />}
+            <div className="flex items-center gap-6 mb-12 mt-4">
+                <button onClick={toggleTimer} className={`w-16 h-16 rounded-full flex items-center justify-center text-white transition-all active:scale-95 border border-app-border ${isActive ? 'bg-[#ff2047]/20 hover:bg-[#ff2047]/30 text-[#ff2047]' : 'bg-transparent hover:bg-white/5'}`}>
+                    {isActive ? <Pause size={28} /> : <Play size={28} className="ml-1 text-[#f0f0f0]" />}
                 </button>
-                <button onClick={resetTimer} className="w-12 h-12 rounded-full bg-app-surface border border-app-border flex items-center justify-center text-app-text hover:bg-app-bg transition-colors">
+                <button onClick={resetTimer} className="w-12 h-12 rounded-full bg-transparent border border-app-border flex items-center justify-center text-[#f0f0f0] hover:bg-white/5 transition-colors">
                     <Square size={20} />
                 </button>
-                <button onClick={skipPhase} className="w-12 h-12 rounded-full bg-app-surface border border-app-border flex items-center justify-center text-app-text hover:bg-app-bg transition-colors">
+                <button onClick={skipPhase} className="w-12 h-12 rounded-full bg-transparent border border-app-border flex items-center justify-center text-[#f0f0f0] hover:bg-white/5 transition-colors">
                     <SkipForward size={20} />
                 </button>
             </div>
 
             {/* Active Session Tools */}
             {isActive && phase === 'work' && (
-                <div className="w-full max-w-md bg-app-surface border border-app-border rounded-xl p-4 mb-8 space-y-4">
-                    <div className="flex justify-between items-center bg-app-bg p-3 rounded-lg border border-app-border">
+                <div className="w-full max-w-md bg-transparent border border-app-border rounded-xl p-6 mb-8 space-y-4">
+                    <div className="flex justify-between items-center bg-transparent p-3 rounded-lg border border-app-border">
                         <div className="flex items-center gap-2 text-app-muted">
                             <AlertCircle size={18} />
-                            <span className="text-sm font-medium">Distractions: {distractions}</span>
+                            <span className="text-[14px] font-sans font-medium tracking-[0.35px]">Distractions: {distractions}</span>
                         </div>
-                        <button onClick={() => setDistractions(d => d + 1)} className="px-3 py-1 bg-app-danger/10 text-app-danger rounded text-sm hover:bg-app-danger/20 transition-colors">
+                        <button onClick={() => setDistractions(d => d + 1)} className="px-3 py-1 bg-[#ff2047]/10 text-[#ff2047] rounded border border-[#ff2047]/20 text-sm hover:bg-[#ff2047]/20 transition-colors">
                             +1 Distract
                         </button>
                     </div>
@@ -143,64 +143,64 @@ export default function Timer() {
                         placeholder="Session notes (optional)..."
                         value={notes}
                         onChange={e => setNotes(e.target.value)}
-                        className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary resize-none h-20"
+                        className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-white/20 resize-none h-24 placeholder:text-app-muted"
                     />
                 </div>
             )}
 
             {/* Completion Card */}
             {showCompletion && !isActive && (
-                <div className="w-full max-w-md bg-linear-to-br from-app-surface to-app-bg border border-app-primary/30 rounded-xl p-6 mb-8 text-center animate-in zoom-in-95 duration-300 shadow-xl shadow-app-primary/5">
-                    <h3 className="text-2xl font-display font-bold text-app-primary mb-2">Great Work!</h3>
-                    <p className="text-app-text mb-4">You studied {subject} for {settings.pomodoroWork} minutes.</p>
-                    {distractions > 0 && <p className="text-sm text-app-muted mb-4">Distractions logged: {distractions}</p>}
-                    <div className="bg-app-primary/10 p-4 rounded-lg border border-app-primary/20 italic text-app-text font-medium mb-6">
+                <div className="w-full max-w-md bg-transparent border border-app-border rounded-xl p-8 mb-8 text-center animate-in zoom-in-95 duration-300">
+                    <h3 className="text-[40px] font-display font-normal text-[#f0f0f0] mb-2 tracking-[-0.96px]">Great Work!</h3>
+                    <p className="text-[16px] text-app-muted font-inter mb-6">You studied <span className="text-[#f0f0f0]">{subject}</span> for {settings.pomodoroWork} minutes.</p>
+                    {distractions > 0 && <p className="text-[14px] text-app-muted font-mono mb-4 border border-app-border rounded py-2">Distractions logged: {distractions}</p>}
+                    <div className="bg-transparent p-6 rounded-lg border border-app-border italic text-[#f0f0f0] font-sans font-normal tracking-[0.35px] mb-8">
                         "{completionQuote}"
                     </div>
-                    <button onClick={() => setShowCompletion(false)} className="px-6 py-2 bg-app-primary text-white rounded-lg hover:bg-app-primary/90 transition-colors">
+                    <button onClick={() => setShowCompletion(false)} className="px-8 py-3 bg-transparent border border-app-border text-[#f0f0f0] rounded-full hover:bg-white/5 transition-colors font-sans tracking-[0.35px]">
                         Dismiss
                     </button>
                 </div>
             )}
 
             {/* Manual Logging */}
-            <div className="w-full max-w-md mt-auto pt-8 border-t border-app-border">
-                <button onClick={() => setShowManualLog(!showManualLog)} className="w-full flex items-center justify-between text-app-text font-medium p-2 hover:bg-app-surface rounded-lg transition-colors">
+            <div className="w-full max-w-md mt-auto pt-8 border-t border-app-border/50">
+                <button onClick={() => setShowManualLog(!showManualLog)} className="w-full flex items-center justify-between text-[#f0f0f0] font-sans tracking-[0.35px] p-4 hover:bg-white/5 border border-transparent hover:border-app-border rounded-xl transition-all">
                     <span>Log Manual Session</span>
                     {showManualLog ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
 
                 {showManualLog && (
-                    <form onSubmit={handleManualSubmit} className="mt-4 bg-app-surface border border-app-border rounded-xl p-5 space-y-4 animate-in slide-in-from-top-4 duration-300">
+                    <form onSubmit={handleManualSubmit} className="mt-4 bg-transparent border border-app-border rounded-xl p-6 space-y-6 animate-in slide-in-from-top-4 duration-300">
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="col-span-2 space-y-1">
-                                <label className="text-xs text-app-muted font-medium">Subject</label>
-                                <select value={manualLog.subject} onChange={e => setManualLog({ ...manualLog, subject: e.target.value })} className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary">
+                            <div className="col-span-2 space-y-1.5">
+                                <label className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px]">Subject</label>
+                                <select value={manualLog.subject} onChange={e => setManualLog({ ...manualLog, subject: e.target.value })} className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/20 appearance-none">
                                     {settings.subjects.map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
                             </div>
-                            <div className="col-span-2 space-y-1">
-                                <label className="text-xs text-app-muted font-medium">Activity</label>
-                                <input type="text" required value={manualLog.activity} onChange={e => setManualLog({ ...manualLog, activity: e.target.value })} className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary" />
+                            <div className="col-span-2 space-y-1.5">
+                                <label className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px]">Activity</label>
+                                <input type="text" required value={manualLog.activity} onChange={e => setManualLog({ ...manualLog, activity: e.target.value })} className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/20" />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-xs text-app-muted font-medium">Date</label>
-                                <input type="date" required value={manualLog.date} onChange={e => setManualLog({ ...manualLog, date: e.target.value })} className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary" />
+                            <div className="space-y-1.5">
+                                <label className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px]">Date</label>
+                                <input type="date" required value={manualLog.date} onChange={e => setManualLog({ ...manualLog, date: e.target.value })} className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/20" />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-xs text-app-muted font-medium">Start Time</label>
-                                <input type="time" required value={manualLog.startTime} onChange={e => setManualLog({ ...manualLog, startTime: e.target.value })} className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary" />
+                            <div className="space-y-1.5">
+                                <label className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px]">Start Time</label>
+                                <input type="time" required value={manualLog.startTime} onChange={e => setManualLog({ ...manualLog, startTime: e.target.value })} className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/20" />
                             </div>
-                            <div className="col-span-2 space-y-1">
-                                <label className="text-xs text-app-muted font-medium">Duration (minutes)</label>
-                                <input type="number" min="1" required value={manualLog.duration} onChange={e => setManualLog({ ...manualLog, duration: Number(e.target.value) })} className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary" />
+                            <div className="col-span-2 space-y-1.5">
+                                <label className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px]">Duration (mins)</label>
+                                <input type="number" min="1" required value={manualLog.duration} onChange={e => setManualLog({ ...manualLog, duration: Number(e.target.value) })} className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/20" />
                             </div>
-                            <div className="col-span-2 space-y-1">
-                                <label className="text-xs text-app-muted font-medium">Notes</label>
-                                <textarea value={manualLog.notes} onChange={e => setManualLog({ ...manualLog, notes: e.target.value })} className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-app-primary resize-none h-16" />
+                            <div className="col-span-2 space-y-1.5">
+                                <label className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px]">Notes</label>
+                                <textarea value={manualLog.notes} onChange={e => setManualLog({ ...manualLog, notes: e.target.value })} className="w-full bg-transparent text-[#f0f0f0] border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/20 resize-none h-20" />
                             </div>
                         </div>
-                        <button type="submit" className="w-full py-2.5 bg-app-primary text-white rounded-lg font-medium hover:bg-app-primary/90 transition-colors">
+                        <button type="submit" className="w-full py-3 bg-transparent border border-app-border text-[#f0f0f0] hover:bg-white/5 rounded-full font-sans tracking-[0.35px] transition-colors">
                             Save Session
                         </button>
                     </form>

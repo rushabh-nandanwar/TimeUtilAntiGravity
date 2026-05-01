@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutDashboard, Timer, Target, BarChart2, BookOpen, Settings, Moon, Sun } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+
 import { useStudyData } from '../context/StudyDataContext';
 
 const navItems = [
@@ -13,16 +13,16 @@ const navItems = [
 ];
 
 export default function Sidebar({ activePage, setActivePage }) {
-    const { theme, toggleTheme } = useTheme();
+
     const { streak } = useStudyData();
 
     return (
-        <aside className="w-64 bg-app-surface border-r border-app-border shrink-0 flex-col transition-colors duration-300 hidden md:flex">
+        <aside className="w-64 bg-transparent border-r border-app-border shrink-0 flex-col transition-colors duration-300 hidden md:flex">
             <div className="p-6">
-                <h1 className="text-2xl font-display font-bold text-app-primary">StudyOS</h1>
+                <h1 className="text-[24px] font-sans font-normal tracking-[-1px] text-[#f0f0f0]">StudyOS</h1>
             </div>
 
-            <nav className="flex-1 px-4 space-y-2">
+            <nav className="flex-1 px-4 space-y-2 mt-4">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = activePage === item.id;
@@ -30,33 +30,23 @@ export default function Sidebar({ activePage, setActivePage }) {
                         <button
                             key={item.id}
                             onClick={() => setActivePage(item.id)}
-                            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer ${isActive
-                                ? 'bg-app-primary/10 text-app-primary border-l-4 border-app-primary'
-                                : 'text-app-muted hover:bg-app-primary/5 hover:text-app-text border-l-4 border-transparent'
+                            className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer ${isActive
+                                ? 'bg-[#f0f0f0]/10 text-white'
+                                : 'text-app-muted hover:bg-white/5 hover:text-[#f0f0f0]'
                                 }`}
                         >
-                            <Icon size={20} />
-                            <span className="font-medium">{item.label}</span>
+                            <Icon size={18} />
+                            <span className="text-[14px] font-sans font-medium tracking-[0.35px]">{item.label}</span>
                         </button>
                     );
                 })}
             </nav>
 
-            <div className="p-4 border-t border-app-border space-y-4">
-                <div className="flex items-center justify-between p-3 bg-app-bg rounded-lg border border-app-border">
-                    <div className="flex flex-col">
-                        <span className="text-xs text-app-muted font-medium uppercase tracking-wider">Current Streak</span>
-                        <span className="font-bold text-lg">🔥 {streak.currentStreak} days</span>
-                    </div>
+            <div className="p-6 space-y-4">
+                <div className="flex flex-col p-4 bg-transparent rounded-xl border border-app-border">
+                    <span className="text-[12px] text-app-muted font-inter uppercase tracking-[0.35px] mb-1">Current Streak</span>
+                    <span className="font-display text-[24px] tracking-tight text-[#f0f0f0] leading-none">🔥 {streak.currentStreak} <span className="text-[14px] text-app-muted font-sans font-normal tracking-normal">days</span></span>
                 </div>
-
-                <button
-                    onClick={toggleTheme}
-                    className="w-full flex items-center justify-center space-x-2 px-4 py-2 border border-app-border rounded-lg text-app-muted hover:text-app-text hover:bg-app-bg transition-colors"
-                >
-                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                    <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-                </button>
             </div>
         </aside>
     );

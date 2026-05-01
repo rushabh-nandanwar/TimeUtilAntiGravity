@@ -23,83 +23,79 @@ export default function Dashboard({ setActivePage }) {
     const recentSessions = sessions.slice(0, 5); // Assumes already sorted chronologically DESC
 
     return (
-        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-20 animate-in fade-in duration-300">
-            <header className="mb-8">
-                <h2 className="text-3xl font-display font-bold text-app-text">Welcome back, Scholar</h2>
-                <p className="text-app-muted mt-2">Here's your progress for today, {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}.</p>
+        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-16 pb-20 animate-in fade-in duration-300">
+            <header className="mb-12 mt-4 space-y-4">
+                <h2 className="text-[76px] md:text-[96px] leading-[1] tracking-[-0.96px] font-display font-normal text-[#f0f0f0]">Welcome back,<br />Scholar</h2>
+                <p className="text-xl font-sans tracking-tight text-app-muted mt-4">Here's your progress for today, {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}.</p>
             </header>
 
             {/* Top 4 Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard
-                    icon={<Clock className="text-app-primary" />}
+                    icon={<Clock className="text-blue-500" />}
                     title="Today's Hours"
                     value={`${todaysHours}h`}
                     subtext={`/ ${targetHours}h target`}
-                    colorClass="border-app-primary"
                 />
                 <StatCard
                     icon={<Flame className="text-orange-500" />}
                     title="Current Streak"
                     value={`${streak.currentStreak} days`}
                     subtext={`Longest: ${streak.longestStreak}`}
-                    colorClass="border-orange-500/50"
                 />
                 <StatCard
                     icon={<TargetIcon className="text-app-secondary" />}
                     title="Pomodoros Today"
                     value={todaysPomodoros}
                     subtext="Sessions completed"
-                    colorClass="border-app-secondary"
                 />
                 <StatCard
                     icon={<CheckCircle className="text-app-danger" />}
                     title="Goals Completed"
                     value={`${completedGoals}/${todaysGoals.length}`}
                     subtext="For today"
-                    colorClass="border-app-danger"
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
                 {/* Left Column: Progress Ring & Goals */}
                 <div className="lg:col-span-2 space-y-8">
-                    <section className="bg-app-surface border border-app-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
-                        <div className="flex flex-col md:flex-row items-center gap-8">
+                    <section className="bg-transparent border border-app-border rounded-[24px] p-8 transition-all relative overflow-hidden">
+                        <div className="flex flex-col md:flex-row items-center gap-12">
                             {/* Circular Progress */}
-                            <div className="relative w-40 h-40 shrink-0">
+                            <div className="relative w-48 h-48 shrink-0">
                                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--color-bg)" strokeWidth="8" />
-                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--color-primary)" strokeWidth="8"
+                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="rgba(214, 235, 253, 0.05)" strokeWidth="6" />
+                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#0075ff" strokeWidth="6"
                                         strokeDasharray="251.2" strokeDashoffset={251.2 - (251.2 * goalProgressPercent) / 100}
                                         className="transition-all duration-1000 ease-out" strokeLinecap="round" />
                                 </svg>
-                                <div className="absolute inset-0 flex flex-col items-center justify-center pt-1">
-                                    <span className="text-3xl font-display font-bold text-app-primary">{goalProgressPercent}%</span>
-                                    <span className="text-[10px] text-app-muted uppercase tracking-wider text-center mt-0.5 leading-tight">Goals<br />Completed</span>
+                                <div className="absolute inset-0 flex flex-col items-center justify-center pt-1 mt-2">
+                                    <span className="text-5xl font-display font-normal text-white">{goalProgressPercent}<span className="text-2xl text-app-muted">%</span></span>
+                                    <span className="text-[12px] text-app-muted font-sans uppercase tracking-[0.35px] text-center mt-2 leading-tight">Goals<br />Completed</span>
                                 </div>
                             </div>
-                            <div className="flex-1 space-y-4 w-full">
-                                <h3 className="text-xl font-display font-semibold border-b border-app-border pb-2">Today's Goals</h3>
+                            <div className="flex-1 space-y-6 w-full">
+                                <h3 className="text-[32px] md:text-[40px] font-sans tracking-[-1px] font-normal pb-2">Today's Goals</h3>
                                 {todaysGoals.length > 0 ? (
-                                    <div className="space-y-2">
+                                    <div className="space-y-3">
                                         {todaysGoals.map(goal => (
-                                            <div key={goal.id} className="flex items-center gap-3 p-3 bg-app-bg rounded-lg border border-app-border hover:border-app-primary/50 transition-colors">
+                                            <div key={goal.id} className="flex items-center gap-4 p-4 bg-transparent rounded-xl border border-app-border hover:bg-white/[0.02] transition-colors">
                                                 <input type="checkbox" checked={goal.completed} onChange={() => updateGoal(goal.id, { completed: !goal.completed })}
-                                                    className="w-5 h-5 accent-app-primary cursor-pointer" />
-                                                <span className={`flex-1 font-medium ${goal.completed ? 'line-through text-app-muted' : 'text-app-text'}`}>
+                                                    className="w-5 h-5 cursor-pointer appearance-none border border-app-border rounded-sm checked:bg-[#f0f0f0] transition-colors relative after:content-[''] after:absolute after:hidden checked:after:block after:left-1.5 after:top-0.5 after:w-1.5 after:h-2.5 after:border-solid after:border-black after:border-r-2 after:border-b-2 after:rotate-45" />
+                                                <span className={`text-[16px] flex-1 font-inter ${goal.completed ? 'line-through text-app-muted' : 'text-[#f0f0f0]'}`}>
                                                     {goal.text}
                                                 </span>
-                                                <span className="text-xs px-2 py-1 bg-app-surface border border-app-border rounded-full text-app-muted">
+                                                <span className="text-[12px] px-3 py-1 bg-transparent border border-app-border rounded-[9999px] text-app-muted font-mono tracking-tight">
                                                     {goal.subject}
                                                 </span>
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="flex items-center gap-2 text-app-muted py-4">
-                                        <AlertCircle size={18} />
-                                        <p>No goals due today. Enjoy your day or add some using the Goals tab!</p>
+                                    <div className="flex items-center gap-3 text-app-muted py-6 border border-app-border/50 rounded-xl px-4 bg-white/[0.01]">
+                                        <AlertCircle size={20} className="text-[#a1a4a5]" />
+                                        <p className="text-[16px] font-inter">No goals due today. Enjoy your day or add some using the Goals tab!</p>
                                     </div>
                                 )}
                             </div>
@@ -108,15 +104,17 @@ export default function Dashboard({ setActivePage }) {
 
                     {/* Quick-start Pomodoro */}
                     <section>
-                        <button onClick={() => setActivePage('timer')} className="w-full relative overflow-hidden group bg-linear-to-r from-app-primary to-app-secondary p-px rounded-2xl block text-left transition-all hover:scale-x-[1.01] active:scale-[0.99] shadow-lg">
-                            <div className="bg-app-surface/95 backdrop-blur-xl px-6 py-8 rounded-2xl relative z-10 flex items-center justify-between">
-                                <div>
-                                    <h3 className="text-2xl font-display font-bold text-app-text group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r from-app-primary to-app-secondary transition-all">Start a Session</h3>
-                                    <p className="text-app-muted mt-1">Jump right into focus mode</p>
+                        <button onClick={() => setActivePage('timer')} className="w-full relative overflow-hidden group bg-transparent border border-app-border rounded-[9999px] p-2 block text-left transition-all hover:bg-white/[0.05] active:scale-[0.99]">
+                            <div className="px-8 py-4 rounded-[9999px] relative z-10 flex items-center justify-between">
+                                <div className="flex items-center gap-6">
+                                    <div className="w-12 h-12 rounded-full border border-app-border flex items-center justify-center transition-all text-[#f0f0f0] bg-white/[0.03]">
+                                        <Play size={20} className="ml-1" fill="currentColor" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-[20px] font-sans font-normal text-[#f0f0f0] tracking-tight">Start a Session</h3>
+                                    </div>
                                 </div>
-                                <div className="w-14 h-14 rounded-full bg-app-primary/10 flex items-center justify-center group-hover:bg-app-primary group-hover:text-white transition-all text-app-primary">
-                                    <Play size={24} className="ml-1" />
-                                </div>
+                                <div className="text-app-muted font-inter text-sm hidden sm:block">Jump right into focus mode</div>
                             </div>
                         </button>
                     </section>
@@ -124,29 +122,29 @@ export default function Dashboard({ setActivePage }) {
 
                 {/* Right Column: Recent Sessions */}
                 <div className="space-y-6">
-                    <section className="bg-app-surface border border-app-border rounded-xl p-6 h-full shadow-sm">
-                        <div className="flex items-center justify-between border-b border-app-border pb-4 mb-4">
-                            <h3 className="text-xl font-display font-semibold">Recent Sessions</h3>
-                            <button onClick={() => setActivePage('log')} className="text-sm text-app-primary hover:underline">View All</button>
+                    <section className="bg-transparent border border-app-border rounded-[24px] p-8 h-full flex flex-col">
+                        <div className="flex items-center justify-between border-b border-app-border/50 pb-6 mb-6">
+                            <h3 className="text-[24px] font-sans font-normal tracking-tight">Recent Sessions</h3>
+                            <button onClick={() => setActivePage('log')} className="text-sm font-inter text-app-muted hover:text-[#f0f0f0] transition-colors">View All</button>
                         </div>
 
                         {recentSessions.length > 0 ? (
-                            <div className="space-y-4">
+                            <div className="space-y-6 flex-1">
                                 {recentSessions.map(session => (
-                                    <div key={session.id} className="group relative pl-4 border-l-2 border-app-border hover:border-app-secondary transition-colors">
-                                        <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-app-bg border border-app-border group-hover:border-app-secondary group-hover:bg-app-secondary transition-colors" />
-                                        <p className="text-xs text-app-muted mb-1">{new Date(session.date).toLocaleDateString()} at {session.startTime}</p>
-                                        <p className="font-medium text-app-text">{session.subject}</p>
-                                        <p className="text-sm text-app-muted mt-0.5">{session.activity}</p>
-                                        <div className="flex items-center gap-2 mt-2">
-                                            <span className="text-xs font-mono px-2 py-0.5 bg-app-primary/10 text-app-primary rounded border border-app-primary/20">{session.duration}m</span>
-                                            <span className="text-xs opacity-60 capitalize">{session.type}</span>
+                                    <div key={session.id} className="group relative pl-5 border-l border-app-border hover:border-[#f0f0f0]/30 transition-colors py-1">
+                                        <div className="absolute left-[-4.5px] top-2 w-[8px] h-[8px] rounded-full bg-[#000000] border-[1.5px] border-app-border group-hover:border-[#f0f0f0] transition-colors" />
+                                        <p className="text-[12px] font-inter text-app-muted mb-1.5">{new Date(session.date).toLocaleDateString()} at {session.startTime}</p>
+                                        <p className="text-[16px] font-sans font-normal text-[#f0f0f0] tracking-tight">{session.subject}</p>
+                                        <p className="text-[14px] font-inter text-app-muted mt-1 ">{session.activity}</p>
+                                        <div className="flex items-center gap-2 mt-3">
+                                            <span className="text-[12px] font-mono px-2 py-0.5 bg-transparent text-app-muted rounded-[4px] border border-app-border">{session.duration}m</span>
+                                            <span className="text-[12px] text-app-muted capitalize font-inter">{session.type}</span>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-app-muted text-sm py-4">No recent sessions found. Time to hit the books!</p>
+                            <p className="text-app-muted font-inter text-[14px] py-4 flex-1">No recent sessions found. Time to hit the books!</p>
                         )}
                     </section>
                 </div>
@@ -155,18 +153,15 @@ export default function Dashboard({ setActivePage }) {
     );
 }
 
-function StatCard({ icon, title, value, subtext, colorClass }) {
+function StatCard({ icon, title, value, subtext }) {
     return (
-        <div className={`bg-app-surface border border-app-border border-l-[3px] ${colorClass} rounded-xl p-5 hover:scale-[1.02] hover:shadow-md transition-all flex flex-col justify-between group`}>
-            <div className="flex justify-between items-start mb-4">
-                <h4 className="text-sm font-medium text-app-muted">{title}</h4>
-                <div className="p-2 bg-app-bg rounded-lg group-hover:bg-opacity-50 transition-colors">
-                    {icon}
-                </div>
+        <div className="bg-transparent border border-app-border rounded-2xl p-6 transition-all flex flex-col justify-between group hover:bg-white/[0.02]">
+            <div className="flex justify-between items-start mb-6">
+                <h4 className="text-[14px] font-inter font-normal text-app-muted tracking-[0.35px] uppercase">{title}</h4>
             </div>
             <div>
-                <div className="text-2xl font-display font-bold text-app-text">{value}</div>
-                <div className="text-sm text-app-muted mt-1">{subtext}</div>
+                <div className="text-[40px] md:text-[48px] font-display font-normal text-white leading-none tracking-[-0.96px]">{value}</div>
+                <div className="text-[14px] font-inter text-app-muted mt-2">{subtext}</div>
             </div>
         </div>
     );

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useStudyData } from '../context/StudyDataContext';
-import { useTheme } from '../context/ThemeContext';
-import { Download, Trash2, Plus, Moon, Sun, Volume2, VolumeX } from 'lucide-react';
+import { Download, Trash2, Plus, Volume2, VolumeX } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
 export default function Settings() {
     const { settings, setSettings, clearAllData, sessions, goals, streak } = useStudyData();
-    const { theme, toggleTheme } = useTheme();
     const toast = useToast();
 
     const [newSubject, setNewSubject] = useState('');
@@ -66,12 +64,12 @@ export default function Settings() {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 pb-20 animate-in fade-in duration-300">
-            <h2 className="text-3xl font-display font-bold text-app-text">Settings</h2>
+        <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-12 pb-20 animate-in fade-in duration-300">
+            <h2 className="text-[56px] font-sans font-normal tracking-[-2.8px] leading-tight text-[#f0f0f0] border-b border-app-border/50 pb-6">Settings</h2>
 
             {/* Timer Settings */}
-            <section className="bg-app-surface border border-app-border rounded-xl p-6 space-y-6 shadow-sm transition-all hover:shadow-md hover:border-app-primary/30">
-                <h3 className="text-xl font-display font-semibold border-b border-app-border pb-4">Timer Settings</h3>
+            <section className="bg-transparent border border-app-border rounded-3xl p-8 space-y-8">
+                <h3 className="text-[24px] font-sans tracking-[-1px] text-[#f0f0f0] border-b border-app-border/50 pb-4">Timer Settings</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                         <label className="flex justify-between text-sm font-medium">
@@ -125,8 +123,8 @@ export default function Settings() {
             </section>
 
             {/* Study Settings */}
-            <section className="bg-app-surface border border-app-border rounded-xl p-6 space-y-6 shadow-sm transition-all hover:shadow-md hover:border-app-primary/30">
-                <h3 className="text-xl font-display font-semibold border-b border-app-border pb-4">Study Settings</h3>
+            <section className="bg-transparent border border-app-border rounded-3xl p-8 space-y-8">
+                <h3 className="text-[24px] font-sans tracking-[-1px] text-[#f0f0f0] border-b border-app-border/50 pb-4">Study Settings</h3>
 
                 <div className="space-y-3">
                     <label className="flex justify-between text-sm font-medium max-w-md">
@@ -142,69 +140,61 @@ export default function Settings() {
                 </div>
 
                 <div className="space-y-4 pt-4">
-                    <label className="text-sm font-medium block">Manage Subjects</label>
-                    <div className="flex flex-wrap gap-2">
+                    <label className="text-[14px] font-inter text-app-muted block">Manage Subjects</label>
+                    <div className="flex flex-wrap gap-3">
                         {settings.subjects.map(subject => (
-                            <span key={subject} className="px-3 py-1.5 bg-app-bg border border-app-border rounded-full text-sm flex items-center gap-2">
+                            <span key={subject} className="px-4 py-2 bg-transparent border border-app-border rounded-full text-[14px] font-sans tracking-[0.35px] text-[#f0f0f0] flex items-center gap-3">
                                 {subject}
-                                <button onClick={() => handleDeleteSubject(subject)} className="text-app-muted hover:text-app-danger transition-colors">
-                                    <Trash2 size={14} />
+                                <button onClick={() => handleDeleteSubject(subject)} className="text-app-muted hover:text-[#ff2047] transition-colors">
+                                    <Trash2 size={16} />
                                 </button>
                             </span>
                         ))}
                     </div>
-                    <form onSubmit={handleAddSubject} className="flex gap-2 max-w-sm pt-2">
+                    <form onSubmit={handleAddSubject} className="flex gap-3 max-w-sm pt-4">
                         <input
                             type="text"
                             value={newSubject}
                             onChange={(e) => setNewSubject(e.target.value)}
                             placeholder="New subject..."
-                            className="flex-1 bg-app-bg border border-app-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-app-primary focus:ring-1 focus:ring-app-primary transition-all"
+                            className="flex-1 bg-transparent border border-app-border text-[#f0f0f0] rounded-lg px-4 py-3 text-[14px] font-inter focus:outline-none focus:border-white/20 transition-all placeholder:text-app-muted"
                         />
                         <button type="submit" disabled={!newSubject.trim()}
-                            className="p-2 bg-app-primary text-white rounded-lg disabled:opacity-50 hover:bg-app-primary/90 active:scale-97 transition-all">
-                            <Plus size={20} />
+                            className="px-6 py-3 bg-transparent border border-app-border text-[#f0f0f0] font-sans tracking-[0.35px] rounded-lg disabled:opacity-50 hover:bg-white/5 active:scale-95 transition-all">
+                            Add
                         </button>
                     </form>
                 </div>
             </section>
 
             {/* Preferences */}
-            <section className="bg-app-surface border border-app-border rounded-xl p-6 space-y-6 shadow-sm transition-all hover:shadow-md hover:border-app-primary/30">
-                <h3 className="text-xl font-display font-semibold border-b border-app-border pb-4">Preferences</h3>
+            <section className="bg-transparent border border-app-border rounded-3xl p-8 space-y-8">
+                <h3 className="text-[24px] font-sans tracking-[-1px] text-[#f0f0f0] border-b border-app-border/50 pb-4">Preferences</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button onClick={() => { toggleTheme(); toast('Theme saved ✓'); }} className="flex items-center justify-between p-4 border border-app-border rounded-lg hover:border-app-primary focus:ring-1 focus:ring-app-primary transition-all active:scale-97 group">
-                        <div className="flex items-center gap-3">
-                            {theme === 'dark' ? <Moon size={20} className="text-app-primary group-hover:scale-110 transition-transform" /> : <Sun size={20} className="text-app-primary group-hover:scale-110 transition-transform" />}
-                            <span className="font-medium">Theme</span>
-                        </div>
-                        <span className="text-app-muted capitalize">{theme}</span>
-                    </button>
-
                     <button onClick={() => { handleSettingChange('soundEnabled', !settings.soundEnabled); handleFocusOut(); }}
-                        className="flex items-center justify-between p-4 border border-app-border rounded-lg hover:border-app-primary focus:ring-1 focus:ring-app-primary transition-all active:scale-97 group">
-                        <div className="flex items-center gap-3">
-                            {settings.soundEnabled ? <Volume2 size={20} className="text-app-secondary group-hover:scale-110 transition-transform" /> : <VolumeX size={20} className="text-app-muted group-hover:scale-110 transition-transform" />}
-                            <span className="font-medium">Timer Sounds</span>
+                        className="flex items-center justify-between p-6 border border-app-border rounded-2xl hover:bg-white/5 transition-all active:scale-95 group">
+                        <div className="flex items-center gap-4 text-[#f0f0f0]">
+                            {settings.soundEnabled ? <Volume2 size={22} className="text-[#f0f0f0] group-hover:scale-110 transition-transform" /> : <VolumeX size={22} className="text-app-muted group-hover:scale-110 transition-transform" />}
+                            <span className="font-inter">Timer Sounds</span>
                         </div>
-                        <span className="text-app-muted">{settings.soundEnabled ? 'On' : 'Off'}</span>
+                        <span className="text-app-muted font-sans tracking-[0.35px]">{settings.soundEnabled ? 'On' : 'Off'}</span>
                     </button>
                 </div>
             </section>
 
             {/* Data Management */}
-            <section className="bg-app-surface border border-app-danger/30 rounded-xl p-6 space-y-5 shadow-sm">
-                <div className="space-y-1">
-                    <h3 className="text-xl font-display font-semibold text-app-danger">Danger Zone</h3>
-                    <p className="text-sm text-app-muted">Manage your local storage data.</p>
+            <section className="bg-transparent border border-[#ff2047]/30 rounded-3xl p-8 space-y-6">
+                <div className="space-y-2">
+                    <h3 className="text-[24px] font-sans tracking-[-1px] text-[#ff2047]">Danger Zone</h3>
+                    <p className="text-[14px] font-inter text-app-muted">Manage your local storage data.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                    <button onClick={handleExportData} className="flex-1 flex items-center justify-center gap-2 py-3 border border-app-border rounded-lg text-app-text hover:bg-app-bg hover:border-app-primary transition-all active:scale-97 font-medium">
-                        <Download size={18} />
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button onClick={handleExportData} className="flex-1 flex items-center justify-center gap-3 py-4 border border-app-border rounded-xl text-[#f0f0f0] hover:bg-white/5 transition-all active:scale-95 font-sans tracking-[0.35px]">
+                        <Download size={20} />
                         Export All Data
                     </button>
-                    <button onClick={() => setShowDeleteModal(true)} className="flex-1 flex items-center justify-center gap-2 py-3 bg-app-danger/10 text-app-danger rounded-lg hover:bg-app-danger/20 transition-all active:scale-97 font-medium border border-app-danger/20">
-                        <Trash2 size={18} />
+                    <button onClick={() => setShowDeleteModal(true)} className="flex-1 flex items-center justify-center gap-3 py-4 border border-[#ff2047]/20 bg-[#ff2047]/10 text-[#ff2047] rounded-xl hover:bg-[#ff2047]/20 transition-all active:scale-95 font-sans tracking-[0.35px]">
+                        <Trash2 size={20} />
                         Clear All Data
                     </button>
                 </div>
@@ -212,26 +202,26 @@ export default function Settings() {
 
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-app-surface border border-app-border rounded-xl p-6 max-w-md w-full space-y-6 shadow-2xl animate-in zoom-in-95 duration-200">
-                        <h3 className="text-xl font-display font-bold text-app-danger flex items-center gap-2">
-                            <Trash2 size={24} /> Delete All Data
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-[#0a0a0a] border border-[#ff2047]/30 rounded-3xl p-8 max-w-md w-full space-y-8 shadow-2xl animate-in zoom-in-95 duration-200">
+                        <h3 className="text-[32px] font-sans tracking-[-1px] text-[#ff2047] flex items-center gap-3">
+                            <Trash2 size={28} /> Delete All Data
                         </h3>
-                        <p className="text-app-muted text-sm">
+                        <p className="text-app-muted text-[14px] font-inter">
                             This action cannot be undone. All your sessions, goals, and settings will be permanently erased.
                         </p>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Type "DELETE" to confirm</label>
+                        <div className="space-y-3">
+                            <label className="text-[12px] uppercase tracking-[0.35px] font-sans text-app-muted">Type "DELETE" to confirm</label>
                             <input type="text" value={deleteConfirm} onChange={e => setDeleteConfirm(e.target.value)}
-                                className="w-full bg-app-bg border border-app-border rounded-lg px-4 py-3 focus:outline-none focus:border-app-danger focus:ring-1 focus:ring-app-danger text-center tracking-widest text-lg font-mono transition-all" />
+                                className="w-full bg-transparent border border-[#ff2047]/30 rounded-lg px-4 py-3 focus:outline-none focus:border-[#ff2047] text-center tracking-[4px] text-[20px] font-mono text-[#f0f0f0] transition-all placeholder:text-[#ff2047]/20" placeholder="DELETE" />
                         </div>
-                        <div className="flex gap-3">
-                            <button onClick={() => { setShowDeleteModal(false); setDeleteConfirm(''); }} className="flex-1 py-3 border border-app-border rounded-lg font-medium hover:bg-app-bg transition-colors active:scale-97">
+                        <div className="flex gap-4">
+                            <button onClick={() => { setShowDeleteModal(false); setDeleteConfirm(''); }} className="flex-1 py-3 border border-app-border rounded-full font-sans tracking-[0.35px] text-[#f0f0f0] hover:bg-white/5 transition-colors active:scale-95">
                                 Cancel
                             </button>
                             <button disabled={deleteConfirm !== 'DELETE'} onClick={handleClearData}
-                                className="flex-1 py-3 bg-app-danger text-white rounded-lg font-medium disabled:opacity-50 transition-all active:scale-97">
-                                Delete Everything
+                                className="flex-1 py-3 bg-[#ff2047] text-white rounded-full font-sans tracking-[0.35px] disabled:opacity-50 transition-all active:scale-95 border border-transparent">
+                                Proceed
                             </button>
                         </div>
                     </div>
