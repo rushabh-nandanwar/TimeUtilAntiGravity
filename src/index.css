@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Syne", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-app-bg: var(--color-bg);
+  --color-app-surface: var(--color-surface);
+  --color-app-border: var(--color-border-subtle);
+  --color-app-primary: var(--color-primary);
+  --color-app-secondary: var(--color-secondary);
+  --color-app-danger: var(--color-danger);
+  --color-app-text: var(--color-text-main);
+  --color-app-muted: var(--color-text-muted);
+}
+
+@layer base {
+  :root {
+    --color-bg: #f5f5ff;
+    --color-surface: #ffffff;
+    --color-border-subtle: #e0e0f0;
+    --color-primary: #6c4ef2;
+    --color-secondary: #00b894;
+    --color-danger: #ff6b6b;
+    --color-text-main: #1a1a2e;
+    --color-text-muted: #666688;
+  }
+
+  .dark {
+    --color-bg: #0f0f13;
+    --color-surface: #1a1a24;
+    --color-border-subtle: #2a2a3a;
+    --color-primary: #7c5cfc;
+    --color-secondary: #00d4aa;
+    --color-danger: #ff6b6b;
+    --color-text-main: #f0f0ff;
+    --color-text-muted: #8888aa;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-app-bg);
+    color: var(--color-app-text);
+    font-family: var(--font-sans);
+    transition: background-color 0.3s, color 0.3s;
+  }
+}
